@@ -20,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TableColumn;
@@ -57,6 +58,7 @@ public class Main extends Application {
 	Text txtItems;
 	int iItems;
 	ArrayList<File> searchedFiles;
+	String keyWord;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -77,7 +79,7 @@ public class Main extends Application {
 
 			ActionClass.createDirectory(sPath);
 
-			HBox topPane = setTopPane(primaryStage); // Top Part of BorderPane
+			VBox topPane = setTopPane(primaryStage); // Top Part of BorderPane
 			ScrollPane leftScrolly = setLeftPane(primaryStage); // Left Part of BorderPane
 
 			// ----------Center Part of Home Screen------------------------------
@@ -104,9 +106,11 @@ public class Main extends Application {
 		}
 	}
 
-	public HBox setTopPane(Stage primaryStage) {
+	public VBox setTopPane(Stage primaryStage) {
 		// ----------Top Part of Home Screen-----------------------------
+		VBox topVBox = new VBox();
 		HBox topPane = new HBox();
+		ProgressBar pgBar = new ProgressBar();
 		topPane.setPadding(new Insets(15, 12, 15, 12));
 		urlBar = new TextField(sPath);
 		Button btnRefresh = new Button();
@@ -146,7 +150,9 @@ public class Main extends Application {
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue,
 					Boolean newPropertyValue) {
 				if (newPropertyValue) {
-					System.out.println("searchBar on focus");
+					//System.out.println(searchBar.getText());
+					keyWord = searchBar.getText();
+					
 				} else {
 					if (searchBar.getText() == "") {
 						searchBar.setText("Search");
@@ -174,11 +180,11 @@ public class Main extends Application {
 			public void handle(KeyEvent ke) {
 				if (ke.getCode().equals(KeyCode.ENTER)) {
 					try {
-						ActionClass.searchPath(searchBar.getText(), urlBar.getText());
+						
+						ActionClass.searchPath(keyWord, urlBar.getText());
 						searchedFiles = ActionClass.getSearchedFiles();
 						BorderPane newPane = Directory.setSearchedPane(primaryStage, searchedFiles);
 						outerCenter.setCenter(newPane);
-						//outerCenter = Directory.setSearchedPane(window, searchedFiles);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -195,7 +201,11 @@ public class Main extends Application {
 				}
 			}
 		});
-		return topPane;
+		
+		topVBox.getChildren().addAll(topPane);
+		
+		
+		return topVBox;
 	}
 
 	public ScrollPane setLeftPane(Stage primaryStage) {

@@ -51,7 +51,14 @@ public class Directory {
 		return null;
 	}
 	
-	
+	public static BorderPane setNullPane(Stage window)
+	{
+		BorderPane outerCenter = new BorderPane();
+		Label label = new Label("No files found.");
+		outerCenter.setCenter(label);
+		
+		return outerCenter;
+	}
 	public static BorderPane setSearchedPane(Stage window, ArrayList<File> searchedFiles)
 	{
 		BorderPane outerCenter = new BorderPane();
@@ -62,6 +69,12 @@ public class Directory {
 		outerCenter.setCenter(centerScroll);
 		outerCenter.setBottom(setHBox());
 		TextField[] labelList = new TextField[searchedFiles.size()];
+		if(labelList.length == 0)
+		{
+			outerCenter = setNullPane(window);
+			return outerCenter;
+		}
+		
 		for(int i = 0; i < searchedFiles.size(); i++)
 		{
 			labelList[i] = new TextField(searchedFiles.get(i).getName());
