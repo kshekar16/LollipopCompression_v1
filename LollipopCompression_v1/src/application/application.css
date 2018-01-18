@@ -1,0 +1,40 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.homeScene{
+	-fx-background-color: black;
+}
+
+#leftPaneTabs
+{
+	-fx-border-radius: 0;
+	-fx-background-color: white;
+	-fx-text-alignment: left;
+}
+
+#leftPaneTabs:hover
+{
+	-fx-background-color: #f2f2f2;
+}
+#directoryFiles
+{
+	-fx-text-alignment: center;
+	-fx-color: blue;
+}
+
+.leftScrolly
+{
+	-fx-background-color: white;
+	
+}
+
+.accordion .titled-pane .title
+{
+	-fx-background-color: white;	
+}
+
+.accordion .titled-pane .title:hover
+{
+	-fx-background-color: #f2f2f2;
+}
+
+
+
